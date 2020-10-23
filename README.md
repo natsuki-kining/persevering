@@ -1,37 +1,42 @@
-# persevering
+# 锲而舍之，朽木不折；锲而不舍，金石可镂。
 
-#### 介绍
-锲而舍之，朽木不折；锲而不舍，金石可镂。
+### 创建此工程的缘由
+每过一段时间、由于种种因素，计划都或多或少需要调整修改，
+不想每次都打开Excel重新编辑制定，所以想写个能根据自己的需求设置自动生成计划表的工具。
 
-#### 软件架构
-软件架构说明
+### 总体理念
+* 简单
+* 方便
+* 合理
 
+### 大概思路
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+* 可随地运行项目，不受环境影响（方便）
+* 输入计划项跟权重（简单）
+* 根据算法生成导出计划表（合理）
 
 
-#### 特技
+### 大概开发设计
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+* 数据结构
+    * 计划表
+        * 类型可自定义：如周计划表，月计划表等。
+        * 计划项集合
+        * 选择的算法
+        
+    * 计划项
+        * 计划的名字
+        * 计划类型
+        
+    * 计划类型
+        * 需要记忆
+        * 需要思考
+        * 等等
+    
+    * 时间
+        * 时间划分
+        
+    * 生成算法需要考虑的因素
+        * 可执行计划时间段的长短
+        * 人每个时间段最适合处理什么类型的事
+        * 等等
