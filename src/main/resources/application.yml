@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+
+
+spring:
+  devtools:
+    restart:
+      #热部署默认会重启
+      enabled: true
+      #添加那个目录的文件需要restart
+      additional-paths: src/main/java,static/**,templates/**,
+      #排除那个目录的文件不需要restart
+      #exclude:
+
+persevering:
+  version: 1.0.0
