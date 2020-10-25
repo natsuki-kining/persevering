@@ -1,8 +1,11 @@
 package com.natsuki_kining.persevering.controller;
 
+import com.natsuki_kining.persevering.utils.ChartsUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +32,17 @@ public class PlanController {
     public void doIt(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String sheetName = "计划表31jj";
         //创建工作薄对象
-        HSSFWorkbook workbook=new HSSFWorkbook();
+        XSSFWorkbook workbook=new XSSFWorkbook();
         //创建工作表对象
-        HSSFSheet sheet = workbook.createSheet(sheetName);
+        XSSFSheet sheet = workbook.createSheet(sheetName);
+
+        ChartsUtil.createPie(sheet);
+
         //创建工作表的行
-        HSSFRow row = sheet.createRow(0);
-        row.createCell(2).setCellValue("aaaaaaaaaaaa");
-        row.createCell(0).setCellValue(new Date());
-        workbook.setSheetName(0,"sheet的Name");
+//        HSSFRow row = sheet.createRow(0);
+//        row.createCell(2).setCellValue("aaaaaaaaaaaa");
+//        row.createCell(0).setCellValue(new Date());
+//        workbook.setSheetName(0,"sheet的Name");
 
         //文档输出
         String agent = request.getHeader("USER-AGENT").toLowerCase();
@@ -44,9 +50,9 @@ public class PlanController {
         String codedFileName = java.net.URLEncoder.encode(sheetName, "UTF-8");
         if (agent.contains("firefox")) {
             response.setCharacterEncoding("utf-8");
-            response.setHeader("content-disposition", "attachment;filename=" + new String(sheetName.getBytes(), "ISO8859-1") + ".xls" );
+            response.setHeader("content-disposition", "attachment;filename=" + new String(sheetName.getBytes(), "ISO8859-1") + ".xlsx" );
         } else {
-            response.setHeader("content-disposition", "attachment;filename=" + codedFileName + ".xls");
+            response.setHeader("content-disposition", "attachment;filename=" + codedFileName + ".xlsx");
         }
 
         OutputStream ouputStream = response.getOutputStream();
