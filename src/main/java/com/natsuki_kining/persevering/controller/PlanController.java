@@ -1,5 +1,8 @@
 package com.natsuki_kining.persevering.controller;
 
+import com.natsuki_kining.persevering.beans.Plan;
+import com.natsuki_kining.persevering.beans.PlanItem;
+import com.natsuki_kining.persevering.enums.PlanType;
 import com.natsuki_kining.persevering.utils.ChartsUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -17,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 计划controller
@@ -29,7 +33,15 @@ import java.util.Date;
 public class PlanController {
 
     @GetMapping("doIt")
-    public void doIt(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doIt(HttpServletRequest request, HttpServletResponse response, Plan plan) throws IOException {
+        PlanType planType = plan.getPlanType();
+        //根据planType选择计划表、时间的划分等
+        List<PlanItem> planItems = plan.getPlanItems();
+        planItems.forEach(planItem -> {
+
+        });
+
+        //导出Excel
         String sheetName = "计划表31jj";
         //创建工作薄对象
         XSSFWorkbook workbook=new XSSFWorkbook();

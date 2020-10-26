@@ -2,6 +2,7 @@ package com.natsuki_kining.persevering.utils;
 
 import com.natsuki_kining.persevering.enums.HourPeriods;
 import com.natsuki_kining.persevering.enums.PlanItemType;
+import com.natsuki_kining.persevering.enums.PlanType;
 import com.natsuki_kining.persevering.enums.TimeQuantum;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class TimeUtil {
 
     public final static List<HourPeriods> hourPeriodsList;
     public final static List<TimeQuantum> timeQuantumList;
+    public final static List<PlanItemType> planItemTypeList;
+    public final static List<PlanType> planTypeList;
     public final static Map<String, PlanItemType> hourPlanItemTypeList;
 
     static {
@@ -45,6 +48,21 @@ public class TimeUtil {
         timeQuantumList.add(TimeQuantum.BANG_WAN);
         timeQuantumList.add(TimeQuantum.WAN_SHANG);
         timeQuantumList.add(TimeQuantum.SHEN_YE);
+
+        planItemTypeList = new ArrayList<>(7);
+        planItemTypeList.add(PlanItemType.THINK);
+        planItemTypeList.add(PlanItemType.REMEMBER);
+        planItemTypeList.add(PlanItemType.RELAX);
+        planItemTypeList.add(PlanItemType.STUDY);
+        planItemTypeList.add(PlanItemType.EXERCISE);
+        planItemTypeList.add(PlanItemType.READ_BOOK);
+        planItemTypeList.add(PlanItemType.SLEEP);
+
+        planTypeList = new ArrayList<>(3);
+        planTypeList.add(PlanType.WEEKLY_PLAN);
+        planTypeList.add(PlanType.MONTHLY_PLAN);
+        planTypeList.add(PlanType.ANNUAL_PLAN);
+        //===============================================
 
         hourPlanItemTypeList = new HashMap<>();
         hourPlanItemTypeList.put("0",PlanItemType.SLEEP);
