@@ -1,8 +1,10 @@
 package com.natsuki_kining.persevering.controller;
 
+import com.natsuki_kining.persevering.beans.Day;
 import com.natsuki_kining.persevering.beans.Plan;
 import com.natsuki_kining.persevering.beans.PlanItem;
 import com.natsuki_kining.persevering.enums.PlanType;
+import com.natsuki_kining.persevering.factory.TimeFactory;
 import com.natsuki_kining.persevering.utils.ChartsUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -34,9 +36,7 @@ public class PlanController {
 
     @GetMapping("doIt")
     public void doIt(HttpServletRequest request, HttpServletResponse response, Plan plan) throws IOException {
-        PlanType planType = plan.getPlanType();
-        //根据planType选择计划表、时间的划分等
-
+        List<Day> dayList = TimeFactory.getDay(plan);
         List<PlanItem> planItems = plan.getPlanItems();
         planItems.forEach(planItem -> {
 
