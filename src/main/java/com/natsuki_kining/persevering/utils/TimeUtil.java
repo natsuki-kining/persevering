@@ -22,7 +22,7 @@ public class TimeUtil {
     public final static List<TimeQuantum> timeQuantumList;
     public final static List<PlanItemType> planItemTypeList;
     public final static List<PlanType> planTypeList;
-    public final static Map<String, PlanItemType> hourPlanItemTypeList;
+    public final static Map<Integer, PlanItemType> hourPlanItemTypeList;
 
     static {
         hourPeriodsList = new ArrayList<>(12);
@@ -65,30 +65,30 @@ public class TimeUtil {
         //===============================================
 
         hourPlanItemTypeList = new HashMap<>();
-        hourPlanItemTypeList.put("0",PlanItemType.SLEEP);
-        hourPlanItemTypeList.put("1",PlanItemType.SLEEP);
-        hourPlanItemTypeList.put("2",PlanItemType.SLEEP);
-        hourPlanItemTypeList.put("3",PlanItemType.SLEEP);
-        hourPlanItemTypeList.put("4",PlanItemType.SLEEP);
-        hourPlanItemTypeList.put("5",PlanItemType.SLEEP);
-        hourPlanItemTypeList.put("6",PlanItemType.EXERCISE);
-        hourPlanItemTypeList.put("7",PlanItemType.THINK);
-        hourPlanItemTypeList.put("8",PlanItemType.REMEMBER);
-        hourPlanItemTypeList.put("9",PlanItemType.REMEMBER);
-        hourPlanItemTypeList.put("10",PlanItemType.REMEMBER);
-        hourPlanItemTypeList.put("11",PlanItemType.REMEMBER);
-        hourPlanItemTypeList.put("12",PlanItemType.REMEMBER);
-        hourPlanItemTypeList.put("13",PlanItemType.SLEEP);
-        hourPlanItemTypeList.put("14",PlanItemType.STUDY);
-        hourPlanItemTypeList.put("15",PlanItemType.STUDY);
-        hourPlanItemTypeList.put("16",PlanItemType.STUDY);
-        hourPlanItemTypeList.put("17",PlanItemType.STUDY);
-        hourPlanItemTypeList.put("18",PlanItemType.EXERCISE);
-        hourPlanItemTypeList.put("19",PlanItemType.READ_BOOK);
-        hourPlanItemTypeList.put("20",PlanItemType.READ_BOOK);
-        hourPlanItemTypeList.put("21",PlanItemType.READ_BOOK);
-        hourPlanItemTypeList.put("22",PlanItemType.READ_BOOK);
-        hourPlanItemTypeList.put("23",PlanItemType.RELAX);
+        hourPlanItemTypeList.put(0,PlanItemType.SLEEP);
+        hourPlanItemTypeList.put(1,PlanItemType.SLEEP);
+        hourPlanItemTypeList.put(2,PlanItemType.SLEEP);
+        hourPlanItemTypeList.put(3,PlanItemType.SLEEP);
+        hourPlanItemTypeList.put(4,PlanItemType.SLEEP);
+        hourPlanItemTypeList.put(5,PlanItemType.SLEEP);
+        hourPlanItemTypeList.put(6,PlanItemType.EXERCISE);
+        hourPlanItemTypeList.put(7,PlanItemType.THINK);
+        hourPlanItemTypeList.put(8,PlanItemType.REMEMBER);
+        hourPlanItemTypeList.put(9,PlanItemType.REMEMBER);
+        hourPlanItemTypeList.put(10,PlanItemType.REMEMBER);
+        hourPlanItemTypeList.put(11,PlanItemType.REMEMBER);
+        hourPlanItemTypeList.put(12,PlanItemType.REMEMBER);
+        hourPlanItemTypeList.put(13,PlanItemType.SLEEP);
+        hourPlanItemTypeList.put(14,PlanItemType.STUDY);
+        hourPlanItemTypeList.put(15,PlanItemType.STUDY);
+        hourPlanItemTypeList.put(16,PlanItemType.STUDY);
+        hourPlanItemTypeList.put(17,PlanItemType.STUDY);
+        hourPlanItemTypeList.put(18,PlanItemType.EXERCISE);
+        hourPlanItemTypeList.put(19,PlanItemType.READ_BOOK);
+        hourPlanItemTypeList.put(20,PlanItemType.READ_BOOK);
+        hourPlanItemTypeList.put(21,PlanItemType.READ_BOOK);
+        hourPlanItemTypeList.put(22,PlanItemType.READ_BOOK);
+        hourPlanItemTypeList.put(23,PlanItemType.RELAX);
     }
 
 }

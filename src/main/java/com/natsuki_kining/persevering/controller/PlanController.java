@@ -38,9 +38,14 @@ public class PlanController {
     public void doIt(HttpServletRequest request, HttpServletResponse response, Plan plan) throws IOException {
         List<Day> dayList = TimeFactory.getDay(plan);
         List<PlanItem> planItems = plan.getPlanItems();
-        planItems.forEach(planItem -> {
+        dayList.forEach(day -> {
+            for (int i = 0; i < day.getHours().size(); i++) {
+                planItems.forEach(planItem -> {
 
+                });
+            }
         });
+
 
         //导出Excel
         String sheetName = "计划表31jj";
