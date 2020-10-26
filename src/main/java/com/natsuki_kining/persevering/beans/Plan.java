@@ -16,6 +16,8 @@ public class Plan {
 
     private String planName;
     private PlanType planType;
+    //计划的时间
+    private String planTime;
     private List<PlanItem> planItems;
 
 }

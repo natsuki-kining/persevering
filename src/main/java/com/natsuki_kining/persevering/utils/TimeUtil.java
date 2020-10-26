@@ -89,8 +89,6 @@ public class TimeUtil {
         hourPlanItemTypeList.put("21",PlanItemType.READ_BOOK);
         hourPlanItemTypeList.put("22",PlanItemType.READ_BOOK);
         hourPlanItemTypeList.put("23",PlanItemType.RELAX);
-
-
-
     }
+
 }

@@ -36,6 +36,7 @@ public class PlanController {
     public void doIt(HttpServletRequest request, HttpServletResponse response, Plan plan) throws IOException {
         PlanType planType = plan.getPlanType();
         //根据planType选择计划表、时间的划分等
+
         List<PlanItem> planItems = plan.getPlanItems();
         planItems.forEach(planItem -> {
 
