@@ -34,9 +34,9 @@ public class PlanController {
 
     @GetMapping("doIt")
     public void doIt(HttpServletRequest request, HttpServletResponse response, Plan plan) throws IOException {
-        PlanType planType = plan.getPlanType();
+        PlanType planType = plan.getType();
         //根据planType选择计划表、时间的划分等
-        List<PlanItem> planItems = plan.getPlanItems();
+        List<PlanItem> planItems = plan.getItems();
         planItems.forEach(planItem -> {
 
         });
@@ -72,6 +72,10 @@ public class PlanController {
         ouputStream.flush();
         ouputStream.close();
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(String.format("%3s", "11").replace(' ', '0'));
     }
 
 }

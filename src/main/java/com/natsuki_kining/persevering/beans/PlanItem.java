@@ -1,6 +1,8 @@
 package com.natsuki_kining.persevering.beans;
 
+import com.natsuki_kining.persevering.enums.HourPeriods;
 import com.natsuki_kining.persevering.enums.PlanItemType;
+import com.natsuki_kining.persevering.enums.PlanItemWeight;
 import lombok.Data;
 
 /**
@@ -12,10 +14,15 @@ import lombok.Data;
 @Data
 public class PlanItem {
 
-    private String itemName;
-    private PlanItemType planItemType;
+    /**
+     * 后面可以改成能填多项
+     */
+    private String name;
+    private PlanItemType type;
     //权重->计算百分比
-    private int weight;
+    private PlanItemWeight weight;
     //指定时间段
-    private String hour;
+    private Float startTime;
+    private Float endTime;
+
 }

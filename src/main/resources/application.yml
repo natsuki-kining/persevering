@@ -18,6 +18,19 @@ spring:
       additional-paths: src/main/java,static/**,templates/**,
       #排除那个目录的文件不需要restart
       #exclude:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/ssr?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat,wall,stat,slf4j,default
+    web-stat-filter:
+      enabled: true
+      url-pattern: /*
+      exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+mybatis:
+  type-handlers-package: com.natsuki_kining.persevering.enums
 
 persevering:
   version: 1.0.0

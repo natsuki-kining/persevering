@@ -3,10 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="/jquery-1.11.1.min.js"></script>
+    <style>
+        .box{
+            border: 1px solid #aaa;
+            margin: 5px 0px;
+            padding: 5px;
+        }
+        .line{
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        .cell{
+            width: 23%;
+            display: inline;
+        }
+        .line-btn{
+            display: inline;
+            float: right;
+            margin: 0 10px;
+        }
+    </style>
 </head>
 <body>
-    <form action="/plan/doIt" method="get">
-        <input type="submit" value="下载">
+    <form>
+        <div class="box">
+            <div class="line">
+                <div class="cell">
+                    <span>计划项：</span>
+                    <span><input name="items.name"></span>
+                </div>
+                <div class="cell">
+                    <span>计划项类型：</span>
+                    <span><input name="items.type"></span>
+                </div>
+                <div class="cell">
+                    <span>权重：</span>
+                    <span><input name="items.weight"></span>
+                </div>
+                <div class="cell">
+                    <span>时间：</span>
+                    <span><input name="items.startTime"></span>
+                    <span>-</span>
+                    <span><input name="items.end"></span>
+                </div>
+                <div class="line-btn">
+                    <button>+</button>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="cell">
+                <span>计划类型：</span>
+                <span><input name="name"></span>
+            </div>
+            <div class="cell">
+                <button class="download">下载</button>
+            </div>
+        </div>
+
     </form>
 </body>
+<script>
+    $(function(){
+        //加载数据
+
+        $(".line-btn button").click(function () {
+            var line = '<div class="line">\n' +
+                '                <div class="cell">\n' +
+                '                    <span>计划项：</span>\n' +
+                '                    <span><input name="items.name"></span>\n' +
+                '                </div>\n' +
+                '                <div class="cell">\n' +
+                '                    <span>计划项类型：</span>\n' +
+                '                    <span><input name="items.type"></span>\n' +
+                '                </div>\n' +
+                '                <div class="cell">\n' +
+                '                    <span>权重：</span>\n' +
+                '                    <span><input name="items.weight"></span>\n' +
+                '                </div>\n' +
+                '                <div class="cell">\n' +
+                '                    <span>时间：</span>\n' +
+                '                    <span><input name="items.startTime"></span>\n' +
+                '                    <span><input name="items.end"></span>\n' +
+                '                </div>\n' +
+                '                <div class="line-btn">\n' +
+                '                    <button>+</button>\n' +
+                '                </div>\n' +
+                '            </div>';
+
+            $(this).parent().parent().parent().append(line);
+        });
+
+        $(".download").click(function () {
+            //action="/plan/doIt" method="get"
+        });
+    })
+</script>
 </html>

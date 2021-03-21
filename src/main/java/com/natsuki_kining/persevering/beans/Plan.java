@@ -14,8 +14,8 @@ import java.util.List;
 @Data
 public class Plan {
 
-    private String planName;
-    private PlanType planType;
-    private List<PlanItem> planItems;
+    private String name;
+    private PlanType type;
+    private List<PlanItem> items;
 
 }
