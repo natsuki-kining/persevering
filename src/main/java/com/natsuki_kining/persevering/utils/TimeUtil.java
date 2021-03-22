@@ -1,14 +1,16 @@
 package com.natsuki_kining.persevering.utils;
 
+import com.natsuki_kining.persevering.beans.Day;
+import com.natsuki_kining.persevering.beans.Plan;
 import com.natsuki_kining.persevering.enums.HourPeriods;
 import com.natsuki_kining.persevering.enums.PlanItemType;
 import com.natsuki_kining.persevering.enums.PlanType;
 import com.natsuki_kining.persevering.enums.TimeQuantum;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * TODO
@@ -18,52 +20,9 @@ import java.util.Map;
  */
 public class TimeUtil {
 
-    public final static List<HourPeriods> hourPeriodsList;
-    public final static List<TimeQuantum> timeQuantumList;
-    public final static List<PlanItemType> planItemTypeList;
-    public final static List<PlanType> planTypeList;
     public final static Map<Integer, PlanItemType> hourPlanItemTypeList;
 
     static {
-        hourPeriodsList = new ArrayList<>(12);
-        hourPeriodsList.add(HourPeriods.ZI_SHI);
-        hourPeriodsList.add(HourPeriods.CHOU_SHI);
-        hourPeriodsList.add(HourPeriods.YIN_SHI);
-        hourPeriodsList.add(HourPeriods.MAO_SHI);
-        hourPeriodsList.add(HourPeriods.CHEN_SHI);
-        hourPeriodsList.add(HourPeriods.SI_SHI);
-        hourPeriodsList.add(HourPeriods.WU_SHI);
-        hourPeriodsList.add(HourPeriods.WEI_SHI);
-        hourPeriodsList.add(HourPeriods.SHEN_SHI);
-        hourPeriodsList.add(HourPeriods.YOU_SHI);
-        hourPeriodsList.add(HourPeriods.XU_SHI);
-        hourPeriodsList.add(HourPeriods.HAI_SHI);
-
-        timeQuantumList = new ArrayList<>(8);
-        timeQuantumList.add(TimeQuantum.LING_CHEN);
-        timeQuantumList.add(TimeQuantum.ZAO_CHEN);
-        timeQuantumList.add(TimeQuantum.SHANG_WU);
-        timeQuantumList.add(TimeQuantum.ZHONG_WU);
-        timeQuantumList.add(TimeQuantum.XIA_WU);
-        timeQuantumList.add(TimeQuantum.BANG_WAN);
-        timeQuantumList.add(TimeQuantum.WAN_SHANG);
-        timeQuantumList.add(TimeQuantum.SHEN_YE);
-
-        planItemTypeList = new ArrayList<>(7);
-        planItemTypeList.add(PlanItemType.THINK);
-        planItemTypeList.add(PlanItemType.REMEMBER);
-        planItemTypeList.add(PlanItemType.RELAX);
-        planItemTypeList.add(PlanItemType.STUDY);
-        planItemTypeList.add(PlanItemType.EXERCISE);
-        planItemTypeList.add(PlanItemType.READ_BOOK);
-        planItemTypeList.add(PlanItemType.SLEEP);
-
-        planTypeList = new ArrayList<>(3);
-        planTypeList.add(PlanType.WEEKLY_PLAN);
-        planTypeList.add(PlanType.MONTHLY_PLAN);
-        planTypeList.add(PlanType.ANNUAL_PLAN);
-        //===============================================
-
         hourPlanItemTypeList = new HashMap<>();
         hourPlanItemTypeList.put(0,PlanItemType.SLEEP);
         hourPlanItemTypeList.put(1,PlanItemType.SLEEP);
@@ -91,4 +50,96 @@ public class TimeUtil {
         hourPlanItemTypeList.put(23,PlanItemType.RELAX);
     }
 
+    /**
+     * 根据计划获取日期集合
+     * @param plan
+     * @return
+     */
+    public static List<Day> getDay(Plan plan) {
+        int size = 0;
+        if (plan.getType() == PlanType.DAILY_PLAN) {
+            size = 1;
+        }else if (plan.getType() == PlanType.WEEKLY_PLAN) {
+            size = 7;
+        } else if (plan.getType() == PlanType.MONTHLY_PLAN) {
+            Date date;
+            if (StringUtils.isBlank(plan.getPlanTime())) {
+                date = new Date();
+            } else {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+                try {
+                    date = simpleDateFormat.parse(plan.getPlanTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    date = new Date();
+                }
+            }
+            size = dayByMonth(date);
+        } else if (plan.getType() == PlanType.ANNUAL_PLAN) {
+            Date date;
+            if (StringUtils.isBlank(plan.getPlanTime())) {
+                date = new Date();
+            } else {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+                try {
+                    date = simpleDateFormat.parse(plan.getPlanTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    date = new Date();
+                }
+            }
+            size = runNian(date) ? 366 : 365;
+        }
+        return new ArrayList<>(size);
+    }
+
+    /**
+     * 根据date获取一个月的天数
+     * @param date
+     * @return
+     */
+    private static int dayByMonth(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+
+        switch (month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                return 31;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                return 30;
+            //对于2月份需要判断是否为闰年
+            case 2:
+                if (runNian(date)) {
+                    return 29;
+                } else {
+                    return 28;
+                }
+
+            default:
+                return 0;
+        }
+    }
+
+    /**
+     * 判断是否是闰年
+     * @param date
+     * @return
+     */
+    private static boolean runNian(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        return ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0));
+    }
 }

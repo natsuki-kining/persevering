@@ -1,5 +1,7 @@
 package com.natsuki_kining.persevering.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.natsuki_kining.persevering.converter.ConverterEnum;
 import lombok.Getter;
 
@@ -10,6 +12,7 @@ import lombok.Getter;
  * @Date : 2020/10/25 18:14
  */
 @Getter
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum PlanItemType implements ConverterEnum {
 
     //思考，记忆，放松，学习，锻炼，看书，睡觉
@@ -27,5 +30,15 @@ public enum PlanItemType implements ConverterEnum {
     PlanItemType(String name, Integer value) {
         this.name = name;
         this.value = value;
+    }
+
+    @JsonCreator
+    public static PlanItemType jsonCreator(Integer value) {
+        for (PlanItemType planItemType : values()) {
+            if (value.intValue() == planItemType.getValue().intValue()) {
+                return planItemType;
+            }
+        }
+        return null;
     }
 }

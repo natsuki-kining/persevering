@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="/jquery-1.11.1.min.js"></script>
+    <script src="/js/jquery-1.11.1.min.js"></script>
     <style>
         .box{
             border: 1px solid #aaa;
@@ -18,47 +18,57 @@
             width: 23%;
             display: inline;
         }
-        .line-btn{
+        .add-btn{
             display: inline;
-            float: right;
-            margin: 0 10px;
+            margin: 0 5px 0 0;
         }
     </style>
 </head>
 <body>
-    <form>
+    <form action="/plan/doIt" method="post">
         <div class="box">
-            <div class="line">
-                <div class="cell">
-                    <span>计划项：</span>
-                    <span><input name="items.name"></span>
-                </div>
-                <div class="cell">
-                    <span>计划项类型：</span>
-                    <span><input name="items.type"></span>
-                </div>
-                <div class="cell">
-                    <span>权重：</span>
-                    <span><input name="items.weight"></span>
-                </div>
-                <div class="cell">
-                    <span>时间：</span>
-                    <span><input name="items.startTime"></span>
-                    <span>-</span>
-                    <span><input name="items.end"></span>
-                </div>
-                <div class="line-btn">
-                    <button>+</button>
-                </div>
+            <div class="add-btn">
+                <button>新增计划项</button>
+            </div>
+            <div class="cell">
+                <button class="download">下载</button>
             </div>
         </div>
         <div class="box">
             <div class="cell">
-                <span>计划类型：</span>
+                <span>计划名称：</span>
                 <span><input name="name"></span>
             </div>
             <div class="cell">
-                <button class="download">下载</button>
+                <span>计划时间：</span>
+                <span><input name="planTime"></span>
+            </div>
+            <div class="cell">
+                <span>计划类型：</span>
+                <span><input name="type"></span>
+            </div>
+
+        </div>
+        <div class="box items">
+            <div class="line">
+                <div class="cell">
+                    <span>计划项：</span>
+                    <span><input name="items[0].name"></span>
+                </div>
+                <div class="cell">
+                    <span>计划项类型：</span>
+                    <span><input name="items[0].type"></span>
+                </div>
+                <div class="cell">
+                    <span>权重：</span>
+                    <span><input name="items[0].weight"></span>
+                </div>
+                <div class="cell">
+                    <span>时间：</span>
+                    <span><input name="items[0].startTime"></span>
+                    <span>-</span>
+                    <span><input name="items[0].endTime"></span>
+                </div>
             </div>
         </div>
 
@@ -66,37 +76,55 @@
 </body>
 <script>
     $(function(){
+        var commonData;
+        var itemIndex = 0;
         //加载数据
+        $.ajax({
+            async:false,
+            type:"post",
+            dataType:"json",
+            url:"/getBasicData",
+            error:function (p1,p2,p3) {
+                console.error(p1,p2,p3);
+            },
+            success:function (data) {
+                console.info(data);
+                commonData = data;
+            }
+        });
 
-        $(".line-btn button").click(function () {
+        console.info("console.info(commonData):",commonData);
+        $(".add-btn button").click(function () {
+            itemIndex++;
             var line = '<div class="line">\n' +
                 '                <div class="cell">\n' +
                 '                    <span>计划项：</span>\n' +
-                '                    <span><input name="items.name"></span>\n' +
+                '                    <span><input name="items['+itemIndex+'].name"></span>\n' +
                 '                </div>\n' +
                 '                <div class="cell">\n' +
                 '                    <span>计划项类型：</span>\n' +
-                '                    <span><input name="items.type"></span>\n' +
+                '                    <span><input name="items['+itemIndex+'].type"></span>\n' +
                 '                </div>\n' +
                 '                <div class="cell">\n' +
                 '                    <span>权重：</span>\n' +
-                '                    <span><input name="items.weight"></span>\n' +
+                '                    <span><input name="items['+itemIndex+'].weight"></span>\n' +
                 '                </div>\n' +
                 '                <div class="cell">\n' +
                 '                    <span>时间：</span>\n' +
-                '                    <span><input name="items.startTime"></span>\n' +
-                '                    <span><input name="items.end"></span>\n' +
-                '                </div>\n' +
-                '                <div class="line-btn">\n' +
-                '                    <button>+</button>\n' +
+                '                    <span><input name="items['+itemIndex+'].startTime"></span>\n' +
+                '                    <span>-</span>\n'+
+                '                    <span><input name="items['+itemIndex+'].endTime"></span>\n' +
                 '                </div>\n' +
                 '            </div>';
 
-            $(this).parent().parent().parent().append(line);
+            $('.items').append(line);
+            return false;
         });
 
         $(".download").click(function () {
             //action="/plan/doIt" method="get"
+
+            return false;
         });
     })
 </script>

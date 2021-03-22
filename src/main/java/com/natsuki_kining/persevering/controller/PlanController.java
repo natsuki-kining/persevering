@@ -11,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +33,13 @@ import java.util.List;
 @RequestMapping("/plan")
 public class PlanController {
 
-    @GetMapping("doIt")
-    public void doIt(HttpServletRequest request, HttpServletResponse response, Plan plan) throws IOException {
+    @PostMapping("doIt")
+    public void doId(Plan plan){
+        System.out.println(plan);
+    }
+
+    @GetMapping("download")
+    public void download(HttpServletRequest request, HttpServletResponse response, Plan plan) throws IOException {
         PlanType planType = plan.getType();
         //根据planType选择计划表、时间的划分等
         List<PlanItem> planItems = plan.getItems();

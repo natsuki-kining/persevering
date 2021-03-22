@@ -1,5 +1,7 @@
 package com.natsuki_kining.persevering.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.natsuki_kining.persevering.converter.ConverterEnum;
 import lombok.Getter;
 
@@ -10,6 +12,7 @@ import lombok.Getter;
  * @Date( 2020/10/25 16:43
  */
 @Getter
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum TimeQuantum implements ConverterEnum {
 
     /**
@@ -63,5 +66,15 @@ public enum TimeQuantum implements ConverterEnum {
         this.value = value;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    @JsonCreator
+    public static TimeQuantum jsonCreator(Integer value) {
+        for (TimeQuantum timeQuantum : values()) {
+            if (value.intValue() == timeQuantum.getValue().intValue()) {
+                return timeQuantum;
+            }
+        }
+        return null;
     }
 }

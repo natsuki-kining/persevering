@@ -1,7 +1,11 @@
 package com.natsuki_kining.persevering.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.natsuki_kining.persevering.converter.ConverterEnum;
 import lombok.Getter;
+
+import java.io.Serializable;
 
 /**
  * 十二时辰枚举
@@ -10,7 +14,8 @@ import lombok.Getter;
  * @Date : 2020/10/25 16:20
  */
 @Getter
-public enum HourPeriods implements ConverterEnum {
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+public enum HourPeriods implements ConverterEnum, Serializable {
     /**
      * 【子时】夜半，又名子夜、中夜：十二时辰的第一个du时辰。（北京时zhi间23时至01时）。
      */
@@ -78,6 +83,21 @@ public enum HourPeriods implements ConverterEnum {
         this.value = value;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    /**
+     * 使用@JsonCreator注解标记一个通过枚举码来查询枚举的方法，Jackson 会使用这个有参构造器进行反序列化
+     * @param value
+     * @return
+     */
+    @JsonCreator
+    public static HourPeriods jsonCreator(Integer value) {
+        for (HourPeriods hourPeriods : values()) {
+            if (value.intValue() == hourPeriods.getValue().intValue()) {
+                return hourPeriods;
+            }
+        }
+        return null;
     }
 
 }
