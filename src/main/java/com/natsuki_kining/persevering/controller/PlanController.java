@@ -33,12 +33,7 @@ import java.util.List;
 @RequestMapping("/plan")
 public class PlanController {
 
-    @PostMapping("doIt")
-    public void doId(Plan plan){
-        System.out.println(plan);
-    }
-
-    @GetMapping("download")
+    @GetMapping("doIt")
     public void download(HttpServletRequest request, HttpServletResponse response, Plan plan) throws IOException {
         PlanType planType = plan.getType();
         //根据planType选择计划表、时间的划分等
@@ -48,7 +43,7 @@ public class PlanController {
         });
 
         //导出Excel
-        String sheetName = "计划表31jj";
+        String sheetName = plan.getName()+"-"+plan.getPlanTime();
         //创建工作薄对象
         XSSFWorkbook workbook=new XSSFWorkbook();
         //创建工作表对象
