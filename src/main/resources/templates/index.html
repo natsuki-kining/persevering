@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-    <form action="/plan/doIt" method="post">
+    <form>
         <div class="box">
             <div class="add-btn">
                 <button>新增计划项</button>
@@ -45,7 +45,11 @@
             </div>
             <div class="cell">
                 <span>计划类型：</span>
-                <span><input name="type"></span>
+                <span id="cell-span">
+                    <select name="type" id="">
+                        <option value ="volvo">Volvo</option>
+                    </select>
+                </span>
             </div>
 
         </div>
@@ -61,7 +65,7 @@
                 </div>
                 <div class="cell">
                     <span>权重：</span>
-                    <span><input name="items[0].weight"></span>
+                    <span id="cell-select-plan-item-0"></span>
                 </div>
                 <div class="cell">
                     <span>时间：</span>
@@ -78,6 +82,8 @@
     $(function(){
         var commonData;
         var itemIndex = 0;
+        var planItemArray = [];
+        var planItemTypeArray = [];
         //加载数据
         $.ajax({
             async:false,
@@ -90,8 +96,31 @@
             success:function (data) {
                 console.info(data);
                 commonData = data;
+                init(data);
             }
         });
+
+
+        function init(data){
+            //计划类型
+            planItemArray = data.planType;
+            planItemTypeArray = data.planItemType;
+
+            let selectPlanType = selectInit(planItemArray,'cell-plan-type','type');
+            let selectPlanItemType = selectInit(planItemTypeArray,'cell-plan-item-type-'+itemIndex,'type');
+
+            $("#cell-span").html(selectPlanType);
+            $("#cell-select-plan-item-"+itemIndex).html(selectPlanItemType);
+        }
+
+        function selectInit(array,selectId,selectName){
+            let selectContent = '<select id="'+selectId+'" name="'+selectName+'>';
+            array.forEach(function(item){
+                selectContent += '<option value ="'+item.value+'">'+item.name+'</option>';
+            });
+            selectContent += '</select>';
+            return selectContent;
+        }
 
         console.info("console.info(commonData):",commonData);
         $(".add-btn button").click(function () {
@@ -107,7 +136,7 @@
                 '                </div>\n' +
                 '                <div class="cell">\n' +
                 '                    <span>权重：</span>\n' +
-                '                    <span><input name="items['+itemIndex+'].weight"></span>\n' +
+                '                    <span id="cell-select-plan-item-"'+itemIndex+'><input name="items['+itemIndex+'].weight"></span>\n' +
                 '                </div>\n' +
                 '                <div class="cell">\n' +
                 '                    <span>时间：</span>\n' +
@@ -118,6 +147,7 @@
                 '            </div>';
 
             $('.items').append(line);
+            $("#cell-select-plan-item-"+itemIndex).html(selectPlanItemType);
             return false;
         });
 
