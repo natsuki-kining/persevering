@@ -20,7 +20,8 @@ public class PlanItem {
     private String name;
     private PlanItemType type;
     //权重->计算百分比
-    private PlanItemWeight weight;
+    private Double weight;
+    private PlanItemWeight planItemWeight;
     //指定时间段
     private Float startTime;
     private Float endTime;

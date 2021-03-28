@@ -18,16 +18,18 @@ public enum PlanType implements ConverterEnum {
     /**
      *
      */
-    DAILY_PLAN("日计划", 0),
-    WEEKLY_PLAN("周计划", 1),
-    MONTHLY_PLAN("月计划", 2),
-    ANNUAL_PLAN("年计划", 3);
+    DAILY_PLAN("日计划","dailyPlan", 0),
+    WEEKLY_PLAN("周计划","weeklyPlan", 1),
+    MONTHLY_PLAN("月计划","monthlyPlan", 2),
+    ANNUAL_PLAN("年计划", "annualPlan",3);
 
-    private final String name;
-    private final Integer value;
+    private String name;
+    private String code;
+    private Integer value;
 
-    PlanType(String name, Integer value) {
+    PlanType(String name,String code, Integer value) {
         this.name = name;
+        this.code = code;
         this.value = value;
     }
 

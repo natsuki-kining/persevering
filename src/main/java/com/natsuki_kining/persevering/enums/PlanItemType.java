@@ -16,20 +16,22 @@ import lombok.Getter;
 public enum PlanItemType implements ConverterEnum {
 
     //思考，记忆，放松，学习，锻炼，看书，睡觉
-    THINK("思考", 0),
-    REMEMBER("记忆", 1),
-    RELAX("放松", 2),
-    STUDY("练习", 3),
-    EXERCISE("锻炼", 4),
-    READ_BOOK("看书", 5),
-    SLEEP("睡觉", 6),
+    THINK("思考", 0,HourPeriods.ZI_SHI),
+    REMEMBER("记忆", 1,HourPeriods.SI_SHI),
+    RELAX("放松", 2,HourPeriods.CHEN_SHI),
+    STUDY("练习", 3,HourPeriods.SHEN_SHI),
+    EXERCISE("锻炼", 4,HourPeriods.YOU_SHI),
+    READ_BOOK("看书", 5,HourPeriods.CHEN_SHI),
+    SLEEP("睡觉", 6,HourPeriods.CHOU_SHI),
     ;
-    private final String name;
-    private final Integer value;
+    private String name;
+    private Integer value;
+    private HourPeriods hourPeriods;
 
-    PlanItemType(String name, Integer value) {
+    PlanItemType(String name, Integer value,HourPeriods hourPeriods) {
         this.name = name;
         this.value = value;
+        this.hourPeriods = hourPeriods;
     }
 
     @JsonCreator

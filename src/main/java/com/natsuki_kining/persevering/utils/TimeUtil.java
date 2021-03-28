@@ -1,11 +1,9 @@
 package com.natsuki_kining.persevering.utils;
 
 import com.natsuki_kining.persevering.beans.Day;
-import com.natsuki_kining.persevering.beans.Plan;
-import com.natsuki_kining.persevering.enums.HourPeriods;
+import com.natsuki_kining.persevering.beans.PlanVO;
 import com.natsuki_kining.persevering.enums.PlanItemType;
 import com.natsuki_kining.persevering.enums.PlanType;
-import com.natsuki_kining.persevering.enums.TimeQuantum;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
@@ -55,7 +53,7 @@ public class TimeUtil {
      * @param plan
      * @return
      */
-    public static List<Day> getDay(Plan plan) {
+    public static int getDay(PlanVO plan) {
         int size = 0;
         if (plan.getType() == PlanType.DAILY_PLAN) {
             size = 1;
@@ -90,7 +88,7 @@ public class TimeUtil {
             }
             size = runNian(date) ? 366 : 365;
         }
-        return new ArrayList<>(size);
+        return size;
     }
 
     /**

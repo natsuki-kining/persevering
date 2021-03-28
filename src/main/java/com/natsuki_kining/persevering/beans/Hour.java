@@ -12,6 +12,7 @@ import lombok.Data;
 @Data
 public class Hour {
 
+    private String planName;
     private HourPeriods hourPeriods;
     private int hour;
 }
