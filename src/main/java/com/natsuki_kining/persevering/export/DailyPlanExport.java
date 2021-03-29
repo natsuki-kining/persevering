@@ -18,4 +18,9 @@ public class DailyPlanExport extends AbstractExport{
     protected PlanDTO initPlanDTO(PlanVO planVO) {
         return new DailyPlanDTO(planVO);
     }
+
+    @Override
+    protected String getTemplatePath() {
+        return null;
+    }
 }

@@ -1,20 +1,25 @@
 package com.natsuki_kining.persevering.export;
 
 import com.natsuki_kining.persevering.beans.PlanVO;
+import com.natsuki_kining.persevering.constant.PerseveringConstant;
 import com.natsuki_kining.persevering.dto.PlanDTO;
-import com.natsuki_kining.persevering.utils.ExportExcelUtil;
+import com.natsuki_kining.persevering.enums.HourPeriods;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Map;
+import java.util.Queue;
 
 /**
  * TODO
@@ -25,7 +30,7 @@ import java.io.*;
 public abstract class AbstractExport {
 
 
-    public void export(HttpServletRequest request,HttpServletResponse response,PlanVO planVO) throws IOException, InvalidFormatException {
+    public void export(HttpServletRequest request, HttpServletResponse response, PlanVO planVO) throws IOException, InvalidFormatException {
         PlanDTO planDTO = initPlanDTO(planVO);
         XSSFWorkbook workbook = exportHandle(planDTO);
 
@@ -35,7 +40,7 @@ public abstract class AbstractExport {
         String codedFileName = java.net.URLEncoder.encode(planDTO.getFileName(), "UTF-8");
         if (agent.contains("firefox")) {
             response.setCharacterEncoding("utf-8");
-            response.setHeader("content-disposition", "attachment;filename=" + new String(planDTO.getFileName().getBytes(), "ISO8859-1") + ".xlsx" );
+            response.setHeader("content-disposition", "attachment;filename=" + new String(planDTO.getFileName().getBytes(), "ISO8859-1") + ".xlsx");
         } else {
             response.setHeader("content-disposition", "attachment;filename=" + codedFileName + ".xlsx");
         }
@@ -50,11 +55,12 @@ public abstract class AbstractExport {
 
     /**
      * 導出處理
+     *
      * @param planDTO
      * @return
      */
     protected XSSFWorkbook exportHandle(PlanDTO planDTO) throws IOException, InvalidFormatException {
-        File templateFile = getTemplateFile(planDTO.getTemplateFilePath());
+        File templateFile = getTemplateFile(getTemplatePath());
         XSSFWorkbook workbook = new XSSFWorkbook(templateFile);
         Sheet planSheet = workbook.getSheetAt(0);
         sheetDataHandle(planSheet, planDTO);
@@ -75,19 +81,29 @@ public abstract class AbstractExport {
                 String cellValue = cell.getStringCellValue();
                 if (StringUtils.isNotBlank(cellValue) && cellValue.trim().startsWith("$")) {
                     String mapKet = cellValue.replace("${", "").replace("}", "");
-                    String data = planDTO.getData().get(mapKet);
-                    if (data == null) {
-                        mapKet = mapKet.replaceAll("-\\d", "");
-                        data = planDTO.getData().get(mapKet);
-                    }
-                    if (data == null){
-                        data = planDTO.getPlanVO().getDefaultPlayItem();
-                    }
+                    String data = getData(planDTO.getData(), mapKet);
                     cell.setCellValue(data);
                 }
             }
         }
     }
+
+    protected String getData(Map<HourPeriods, Queue<String>> map, String mapKet) {
+        String key = mapKet.substring(mapKet.indexOf("-") + 1).replaceAll("-\\d", "");
+        Queue<String> queue = map.get(HourPeriods.getHourPeriodsByCode(key));
+        if (queue != null) {
+            return queue.poll();
+        }
+        return PerseveringConstant.DEFAULT_PLAN_ITEM;
+    }
+
+
+    /**
+     * 模板文件路徑
+     *
+     * @return
+     */
+    protected abstract String getTemplatePath();
 
     protected File getTemplateFile(String path) throws FileNotFoundException {
         File file = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + path);

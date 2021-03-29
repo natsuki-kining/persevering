@@ -1,12 +1,10 @@
 package com.natsuki_kining.persevering.dto;
 
 import com.natsuki_kining.persevering.beans.PlanVO;
+import com.natsuki_kining.persevering.enums.HourPeriods;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * TODO
@@ -23,11 +21,6 @@ public abstract class PlanDTO {
 
     protected String title;
 
-    protected String templateFilePath;
+    protected Map<HourPeriods, Queue<String>> data;
 
-    protected Map<String, String> data;
-
-    public PlanDTO(){
-        data = new HashMap<>();
-    }
 }

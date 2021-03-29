@@ -22,4 +22,9 @@ public class WeeklyPlanExport extends AbstractExport{
         return new WeeklyPlanDTO(planVO);
     }
 
+    @Override
+    protected String getTemplatePath() {
+        return "tmp\\weekly-plan.xlsx";
+    }
+
 }

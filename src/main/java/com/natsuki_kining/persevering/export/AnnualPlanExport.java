@@ -18,4 +18,9 @@ public class AnnualPlanExport extends AbstractExport{
     protected PlanDTO initPlanDTO(PlanVO planVO) {
         return new AnnualPlanDTO(planVO);
     }
+
+    @Override
+    protected String getTemplatePath() {
+        return null;
+    }
 }

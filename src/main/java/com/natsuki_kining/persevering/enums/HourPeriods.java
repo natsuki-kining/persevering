@@ -31,7 +31,7 @@ public enum HourPeriods implements ConverterEnum, Serializable {
     /**
      * 【卯时】日出，又名日始、破晓、旭日等：指太阳刚刚露脸，冉冉初升的那段时间。（北京时间05时至07时）。
      */
-    MAO_SHI("卯时", "",5, 5, 7),
+    MAO_SHI("卯时", "mao",5, 5, 7),
     /**
      * 【辰时】食时，又名早食等：古人“朝食”之时也就是吃早饭时间，（北京时间07时至09时）。
      */
@@ -96,6 +96,15 @@ public enum HourPeriods implements ConverterEnum, Serializable {
     public static HourPeriods jsonCreator(Integer value) {
         for (HourPeriods hourPeriods : values()) {
             if (value.intValue() == hourPeriods.getValue().intValue()) {
+                return hourPeriods;
+            }
+        }
+        return null;
+    }
+
+    public static HourPeriods getHourPeriodsByCode(String code){
+        for (HourPeriods hourPeriods : values()) {
+            if (hourPeriods.getCode().equals(code)) {
                 return hourPeriods;
             }
         }
