@@ -68,22 +68,41 @@ public abstract class AbstractExport {
     }
 
     protected void sheetDataHandle(Sheet planSheet, PlanDTO planDTO) {
-        for (int lastRowNum = planSheet.getLastRowNum(), currentRowNum = 0; currentRowNum <= lastRowNum; currentRowNum++) {
+        int lastCellNum = 0;
+        for (int lastRowNum = planSheet.getLastRowNum(), currentRowNum = 0,currentCellNum = 0; currentCellNum <= lastCellNum;currentRowNum++) {
             Row currentRow = planSheet.getRow(currentRowNum);
             if (currentRow == null) {
+                if (currentRowNum >= lastRowNum){
+                    currentRowNum = 0;
+                    currentCellNum ++;
+                }
                 continue;
             }
-            for (int lastCellNum = currentRow.getLastCellNum(), currentCellNum = 0; currentCellNum < lastCellNum; currentCellNum++) {
-                XSSFCell cell = (XSSFCell) currentRow.getCell(currentCellNum);
-                if (cell == null) {
-                    continue;
+            int cellNum = currentRow.getLastCellNum();
+            if (cellNum > lastCellNum){
+                lastCellNum = cellNum;
+            }
+            XSSFCell cell = (XSSFCell) currentRow.getCell(currentCellNum);
+            if (cell == null) {
+                if (currentRowNum >= lastRowNum){
+                    currentRowNum = 0;
+                    currentCellNum ++;
                 }
-                String cellValue = cell.getStringCellValue();
-                if (StringUtils.isNotBlank(cellValue) && cellValue.trim().startsWith("$")) {
-                    String mapKet = cellValue.replace("${", "").replace("}", "");
-                    String data = getData(planDTO.getData(), mapKet);
-                    cell.setCellValue(data);
-                }
+                continue;
+            }
+            if (currentRowNum >= lastRowNum){
+                currentRowNum = 0;
+                currentCellNum ++;
+            }
+            String cellValue = cell.getStringCellValue();
+            if (StringUtils.isNotBlank(cellValue) && cellValue.trim().startsWith("$")) {
+                String mapKet = cellValue.replace("${", "").replace("}", "");
+                String data = getData(planDTO.getData(), mapKet);
+                cell.setCellValue(data);
+            }
+            if (currentRowNum >= lastRowNum){
+                currentRowNum = 0;
+                currentCellNum ++;
             }
         }
     }
